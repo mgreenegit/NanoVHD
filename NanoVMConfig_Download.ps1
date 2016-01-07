@@ -30,7 +30,7 @@ $choiceList.Add((New-Object "System.Management.Automation.Host.ChoiceDescription
 $choiceList.Add((New-Object "System.Management.Automation.Host.ChoiceDescription" -ArgumentList "&Yes"))
 $eulaText = @"
 Before installing and using the Nano Server install option of Windows Server Technical Preview 4 for Developers VHD you must: 
-    1.	Review the license terms by navigating to this link: http://aka.ms/nanoevaltp4
+    1.	Review the license terms by navigating to this link: http://aka.ms/nanoeval
     2.	Print and retain a copy of the license terms for your records.
 By downloading and using the Nano Server install option of Windows Server Technical Preview 4 for Developers VHD you agree to such license terms. Please confirm you have accepted and agree to the license terms.
 "@
