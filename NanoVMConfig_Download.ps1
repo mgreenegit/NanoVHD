@@ -1,14 +1,21 @@
-﻿#
-# Nano Server installation option of Windows Server Technical Preview 4 for Developers
-# 
-# Host configuration test script
+﻿#Requires -Version 5
+#Requires -RunAsAdministrator
+#Requires -Modules xHyper-V,xDismFeature,xPSDesiredStateconfiguration
+#
+# Nano Server installation option of Windows Server Technical Preview 4 for Developers 
+# Host Configuration Test Script v0.1
+#
+# To install the required DSC modules from the PowerShell Gallery
+#     Install-Module xHyper-V,xDismFeature,xPSDesiredStateconfiguration -Force
 # 
 # This script applies a PowerShell DSC configuration to the local host to download the
 # Nano evaluation VHD and configure a VM to run it for testing.
 #
 # Considerations:
 #  -  Adding Hyper-V to your workstation might require a reboot.
-#  -  The script will configure a new virtual switch and VM.  The names are configured as static variables below.  Be sure to avoid conflicts with existing configurations.
+#  -  The script will configure a new virtual switch and VM.  The names are configured as
+#     static variables below.  Be sure to avoid conflicts with existing configurations.
+#
 #
 
 # Static
@@ -31,7 +38,6 @@ $EULA = [boolean]$Host.ui.PromptForChoice($null, $eulaText, $choiceList, 0)
 
 # If T&C are accepted, configure localhost with Nano VM based on Static values
 If ($EULA -eq $true) {
-    Install-Module xHyper-V,xDismFeature,xpsdesiredstateconfiguration -Force
 
     Configuration NanoVM
     {
@@ -97,6 +103,7 @@ If ($EULA -eq $true) {
             }
         }
     }
+
     NanoVM -out $WorkingDir
     Start-DscConfiguration -wait -verbose -path $WorkingDir -force
 }
