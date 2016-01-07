@@ -1,4 +1,17 @@
-﻿# Static
+﻿#
+# Nano Server installation option of Windows Server Technical Preview 4 for Developers
+# 
+# Host configuration test script
+# 
+# This script applies a PowerShell DSC configuration to the local host to download the
+# Nano evaluation VHD and configure a VM to run it for testing.
+#
+# Considerations:
+#  -  Adding Hyper-V to your workstation might require a reboot.
+#  -  The script will configure a new virtual switch and VM.  The names are configured as static variables below.  Be sure to avoid conflicts with existing configurations.
+#
+
+# Static
 $VMName = 'Nano1'
 $SwitchName = 'PrivateSwitch'
 $VMPath = "c:\VM\$VMhName"
