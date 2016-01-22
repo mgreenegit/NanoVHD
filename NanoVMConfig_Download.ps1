@@ -1,6 +1,6 @@
 ﻿#Requires -Version 5
 #Requires -RunAsAdministrator
-#Requires -Modules xHyper-V,xDismFeature,xPSDesiredStateconfiguration
+#Requires -Modules @{ModuleName="xHyper-V"; RequiredVersion="3.2.0.0"}, @{ModuleName="xDismFeature"; RequiredVersion="1.1.0.0"},@{ModuleName="xPSDesiredStateconfiguration"; RequiredVersion="3.6.0.0"}
 #
 # Nano Server installation option of Windows Server Technical Preview 4 for Developers 
 # Host Configuration Test Script v0.1
@@ -41,7 +41,7 @@ If ($EULA -eq $true) {
 
     Configuration NanoVM
     {
-        Import-DscResource -module xHyper-V, xDismFeature, xPSDesiredStateconfiguration, PSDesiredStateconfiguration
+        Import-DscResource -module @{ModuleName="xHyper-V"; RequiredVersion="3.2.0.0"}, @{ModuleName="xDismFeature"; RequiredVersion="1.1.0.0"},@{ModuleName="xPSDesiredStateconfiguration"; RequiredVersion="3.6.0.0"},@{ModuleName="PSDesiredStateconfiguration"; RequiredVersion="1.1"}
         Node localhost
         {
             # xDismFeature is used with the assumption this is tested on a Win10 machine as opposed to a server where the WindowsFeature resource could be used
