@@ -1,6 +1,6 @@
 ﻿# Static Path Variables
 $WorkingPath = 'C:\NanoBuild'
-$ISOPath = 'C:\VM\10586.0.151029-1700.TH2_RELEASE_SERVER_OEMRET_X64FRE_EN-US.ISO'
+$ISOPath = "c:/users/matt/downloads/14393.0.160808-1702.RS1_Release_srvmedia_SERVER_OEMRET_X64FRE_EN-US.ISO"
 
 # Mount ISO if not already present and get drive letter
 if ((Get-DiskImage $ISOPath).Attached -ne $true) {
@@ -21,7 +21,7 @@ if (!(Test-Path $MediaPath)) {
 # Ensure Working Directory includes Nano scripts
 if (!(Test-Path $WorkingPath)) {
     $NewWorkingPath =New-Item $WorkingPath -ItemType Directory
-    $ScriptModuleFiles = Get-ChildItem (Join-Path $MediaPath 'NanoServer') *.ps* | % FullName
+    $ScriptModuleFiles = Get-ChildItem (Join-Path $MediaPath 'NanoServer\NanoServerImageGenerator') *.ps* | % FullName
     $ScriptModule = Copy-Item $ScriptModuleFiles $WorkingPath -Force
     }
 
@@ -38,13 +38,12 @@ $Params = @{
     BasePath = $BasePath
     TargetPath = $TargetPath
     MaxSize = 100GB
-    GuestDrivers = $true
-    ReverseForwarders = $true
+    DeploymentType = 'Guest'
     Containers = $true
-    #Defender = $true
     Packages = 'Microsoft-NanoServer-DSC-Package','Microsoft-NanoServer-IIS-Package'
     EnableRemoteManagementPort = $true
     AdministratorPassword = 'Pass@word1' | ConvertTo-SecureString -AsPlainText -Force # Note that when the unattend file is removed from the image, this does not take effect
+    Edition = 'Standard'
     Verbose = $true
     }
 
@@ -66,6 +65,7 @@ If (Test-Path $ScriptLog) {$ScriptLogMove = Move-Item $ScriptLog $TargetPathFold
 $MountVHD = Mount-VHD $TargetPath -Passthru | Get-Disk | Get-Partition | Get-Volume
 $UnattendXMLFile = Join-Path ($MountVHD.driveletter + ':') 'Windows\Panther\Unattend.XML'
 if (Test-Path $UnattendXMLFile) {Remove-Item $UnattendXMLFile}
+
 Dismount-VHD $TargetPath
 
 # Dismount ISO
